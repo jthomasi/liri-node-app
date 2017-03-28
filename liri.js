@@ -2,6 +2,8 @@ var command = process.argv[2];
 
 if (command == "my-tweets") {
 
+	var twitter = require('twitter');
+
 	var client = (require('./keys')).twitterKeys;
 
 	console.log(client);
