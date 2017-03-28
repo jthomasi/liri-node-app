@@ -19,6 +19,19 @@ else if (command == "spotify-this-song") {
 
 	var song = process.argv[3];
 
+	var spotify = require('spotify');
+ 
+	spotify.search({ type: 'track', query: song }, function(err, data) {
+	    if ( err ) {
+	        console.log('Error occurred: ' + err);
+	        return;
+	    }
+	    else {
+	    	console.log(data);
+	    }
+	 
+	});
+
 }
 
 else if (command == "movie-this") {
