@@ -2,16 +2,18 @@ var command = process.argv[2];
 
 if (command == "my-tweets") {
 
-	var twitter = require('twitter');
+	// var twitter = require('twitter');
 
-	var client = (require('./keys')).twitterKeys;
+	var keys = require('./keys');
+
+	var client = keys.twitterKeys;
 
 	console.log(client);
 	 
 	var params = {screen_name: 'jay_aye_tea'};
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
 	  if (!error) {
-	    console.log(tweets.text);
+	    console.log(tweets[3]);
 	  }
 	});
 
