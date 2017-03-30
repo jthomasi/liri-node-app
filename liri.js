@@ -1,39 +1,38 @@
 var command = process.argv[2];
+var Twitter = require('twitter');
+var Spotify = require('spotify');
+var keys = require('./keys');
 
 if (command == "my-tweets") {
 
-	// var twitter = require('twitter');
-
-	var keys = require('./keys');
-
-	var client = keys.twitterKeys;
-
-	console.log(client);
+	var api_keys = keys.twitterKeys;
+	var client = new Twitter(api_keys);
 	 
 	var params = {screen_name: 'jay_aye_tea'};
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
-	  if (!error) {
-	    console.log(tweets[3]);
-	  }
+		if (!error) {
+			var js = JSON.stringify(tweets);
+			var obj = JSON.parse(js, function (key, value) {
+			    if (key == "text") {
+			        console.log(value);
+			    } 
+			});
+		}
 	});
-
 }
 
 else if (command == "spotify-this-song") {
 
 	var song = process.argv[3];
-
-	var spotify = require('spotify');
  
-	spotify.search({ type: 'track', query: song }, function(err, data) {
+	Spotify.search({ type: 'track', query: song }, function(err, data) {
 	    if ( err ) {
 	        console.log('Error occurred: ' + err);
 	        return;
 	    }
 	    else {
-	    	console.log(data);
+	    	console.log(data.tracks.items);
 	    }
-	 
 	});
 
 }
