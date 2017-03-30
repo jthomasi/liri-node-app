@@ -31,7 +31,16 @@ else if (command == "spotify-this-song") {
 	        return;
 	    }
 	    else {
-	    	console.log(data.tracks.items);
+	    	console.log(data.tracks.items[0]);
+	    	js = JSON.stringify(data.tracks.items[0]);
+	    	var obj = JSON.parse(js, function (key, value) {
+			    if (key == "name") {
+			    	console.log(value);
+			    }
+			    else if (key == "external_urls") {
+			    	console.log(value.spotify);
+			    }
+			});
 	    }
 	});
 
