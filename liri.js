@@ -18,6 +18,10 @@ if (command == "my-tweets") {
 			    } 
 			});
 		}
+		else {
+			console.log('Error occurred: ' + err);
+	        return;
+		}
 	});
 }
 
@@ -26,7 +30,7 @@ else if (command == "spotify-this-song") {
 	var song = process.argv[3];
  
 	Spotify.search({ type: 'track', query: song }, function(err, data) {
-	    if ( err ) {
+	    if (err) {
 	        console.log('Error occurred: ' + err);
 	        return;
 	    }
