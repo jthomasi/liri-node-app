@@ -15,12 +15,9 @@ if (command == "my-tweets") {
 		if (!error) {
 			console.log("--------------------------------------------------------------");
 			console.log("Here is a list of @jay_aye_tea's most recent tweets! Enjoy!");
-			var js = JSON.stringify(tweets);
-			var obj = JSON.parse(js, function (key, value) {
-			    if (key == "text") {
-			        console.log(value);
-			    } 
-			});
+			for (var i=0;i<tweets.length;i++) {
+				console.log("\""+tweets[i].text+"\" Created on: "+tweets[i].created_at);
+			}
 		}
 		else {
 			console.log('Error occurred: ' + err);
@@ -33,7 +30,7 @@ if (command == "my-tweets") {
 else if (command == "spotify-this-song") {
 
 	if (!process.argv[3]) {
-		var songTitle = "Hey ya";
+		var songTitle = "The Sign, Ace of Base";
 	}
 	else {
 		var song = "";
@@ -57,7 +54,7 @@ else if (command == "spotify-this-song") {
 	    	console.log("Song Name: "+songInfo.name);
 	    	console.log("Band Name: "+songInfo.artists[0].name);
 	    	console.log("Album Name: "+songInfo.album.name);
-	    	console.log("Spotify Link: "+songInfo.preview_url);
+	    	console.log("Spotify Preview: "+songInfo.preview_url);
 	    	console.log("--------------------------------------------------------------------");
 	    }
 	});
@@ -79,23 +76,21 @@ else if (command == "movie-this") {
 	Omdb.get({ title: movieTitle }, true, function(err, movie) {
 
 	    if(err) {
-	        return console.error(err);
+	        return console.error(err+" Movie not found!");
 	    }
-	 
-	    if(!movie) {
-	        return console.log('Movie not found!');
-	    }
-	 
-	    console.log("Movie: "+movie.title, "("+movie.year+")");
-	    console.log("IMDB Rating: "+movie.imdb.rating);
-	    console.log("Countries released: "+movie.countries);
-	    
-	    console.log("Plot: "+movie.plot);
-	    console.log("Actors: "+movie.actors);
-	    // language, RT score, RT link
-	    
+	 	else {
+	 		console.log("--------------------------------------------------------------------");
+	 		console.log("You searched for \""+movieTitle+"\" in IMDB. Here's what we got: ");
+	 		console.log("--------------------------------------------------------------------");
+	 		console.log("Movie: "+movie.title, "("+movie.year+")");
+		    console.log("IMDB Rating: "+movie.imdb.rating);
+		    console.log("Actors: "+movie.actors);
+		    console.log("Countries released: "+movie.countries);
+		    console.log("Plot: "+movie.plot);
+		    console.log("--------------------------------------------------------------------");
+		    // language, RT score, RT link? Didnt see any of these as options to pull from in the movie data
+	 	}
 	});
-
 }
 
 else if (command == "do-what-it-says") {
@@ -106,18 +101,13 @@ else if (command == "do-what-it-says") {
 			return console.log(err);
 		}
 		else {
-
 			var dataArr = data.split(",");
-
 			var spotSong;
-
 		    for (var i=0 ; i<dataArr.length ; i++) {
-
-		    	spotSong = dataArr[i];
-		        
+		    	spotSong = dataArr[i]; 
 		    }
-
 		    Spotify.search({ type: 'track', query: spotSong }, function(err, data) {
+
 			    if (err) {
 			        console.log('Error occurred: ' + err);
 			        return;
@@ -130,13 +120,11 @@ else if (command == "do-what-it-says") {
 			    	console.log("Song Name: "+songInfo.name);
 			    	console.log("Band Name: "+songInfo.artists[0].name);
 			    	console.log("Album Name: "+songInfo.album.name);
-			    	console.log("Spotify Link: "+songInfo.preview_url);
+			    	console.log("Spotify Preview: "+songInfo.preview_url);
 			    	console.log("--------------------------------------------------------------------");
 			    }
 			});
-
 		}
-
 	});
 }
 
